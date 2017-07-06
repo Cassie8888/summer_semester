@@ -1,0 +1,108 @@
+﻿                                         
+                              夏季小学期  坦克大战
+ 
+注：目前只有一些零碎的构想，还没有形成总体框架，还应仔细研读例子。
+
+
+ 游戏规则：       通过方向键操作，控制坦克移动方向，并实现射击。
+
+                  击中敌机则得分，被敌机击中则失败退出。
+
+
+
+实现思路：       1. 定义我方坦克的结构体：
+
+                  方向：typedef enum _direction
+
+               {
+	
+                    UP,
+
+	            DOWN,
+	
+                    LEFT,
+	
+                    RIGHT,
+
+                }direction;
+              
+                   struct my_tank
+                  {
+                     int x;
+                     int y;
+                     int direction;
+                   
+                  }
+
+                 2. 定义可击中范围，当子弹打到击中范围时，判定死亡,即：
+                   //我方发射子弹
+                   int shot;
+                   if（shot在击中范围内）
+                    Destroy_Enemy_Tank();
+                   //敌方发射子弹
+                    if(shot在范围内)
+                    Destroy_My_Tank(); 
+
+                 3.关于坦克的移动：（参考网络代码，大意为：如果判定可以前行，则擦除原图，构造新图并刷新，使坦克移动）
+         
+                  // 可以前行
+	        if (ok) {
+		// 擦除旧图
+		clear_old();
+		// 擦出游戏空间中原有图形
+		for (/*int*/ y = 0; y != 3; y++) {
+			for (/*int*/ x = 0; x != 3; x++) {	
+					_x = xy[y][x].x;
+					_y = xy[y][x].y;
+					gs[_y][_x] = GameSpace(0,0,false);			
+				    xy[y][x] = txy[y][x];
+			}
+		}
+		
+		// 在游戏空间中登记加入图形
+		for (/*int*/ y = 0; y != 3; y++) {
+			for (/*int*/ x = 0; x != 3; x++) {
+					_x = xy[y][x].x;
+					_y = xy[y][x].y;
+					gs[_y][_x] = GameSpace(no,kind,true);
+			}
+		}
+		// 刷新新图
+		draw_tank();
+		// 更新移动变量
+		speed = TANKSPEED;
+	          }	
+                }
+
+               4.根据参考资料设置光标和背景颜色：       
+                void show_cursor(int x, int y)
+               {
+	         CONSOLE_CURSOR_INFO cci;
+	         cci.dwSize = 2;           //设置光标的大小,值为1-100
+	         cci.bVisible = TRUE;       //设置光标是否显示
+	         HANDLE hOutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	         BOOL bResult = SetConsoleCursorInfo(hOutputHandle,&cci);//设置光标信息
+
+	         COORD pos = {2 * x, y};
+	         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
+                }
+       
+                // 函数作用：设置输出的文本前景色和背景色
+                void color(int n_color)
+              {
+	         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), n_color);
+               }
+            
+
+                5. 设计障碍物（根据实际情况取舍）
+                  猜想:struct Wall
+                      {
+                        int wide;
+                        int high;
+                        void set_brick(？);//c语言不能使用string
+                      }
+
+
+
+主要问题：         1、如何形成整体框架
+                   2、如何实现障碍物的阻拦
