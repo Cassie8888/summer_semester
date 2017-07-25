@@ -204,30 +204,47 @@ while running:
     if myfirst.rect.colliderect(backimg_surface.rect):#判断浆果是否与小人碰撞，如果碰撞表示小人接到金币
         scorenum+=5
         loadtext(levelnum,scorenum)
+        soundwav1=pygame.mixer.Sound("good.wav") 
+        soundwav1.set_volume(2)
+        soundwav1.play()
         firstx=random.randint(50,980)
         myfirst=firstrect([firstx,100],speed1) 
         
+
+        
     if mysecond.rect.colliderect(backimg_surface.rect):
         scorenum+=10
-        loadtext(levelnum,scorenum)  
+        loadtext(levelnum,scorenum)
+        soundwav2=pygame.mixer.Sound("good.wav") 
+        soundwav2.set_volume(2)
+        soundwav2.play()  
         secondx=random.randint(50,980)
         mysecond=secondrect([secondx,100],speed2)  
         
     if mythird.rect.colliderect(backimg_surface.rect):
         scorenum+=15
-        loadtext(levelnum,scorenum)  
+        loadtext(levelnum,scorenum)
+        soundwav3=pygame.mixer.Sound("good.wav")
+        soundwav3.set_volume(2) 
+        soundwav3.play()  
         thirdx=random.randint(50,980)
         mythird=thirdrect([thirdx,100],speed3)
           
     if myfourth.rect.colliderect(backimg_surface.rect):
         scorenum+=20
-        loadtext(levelnum,scorenum)  
+        loadtext(levelnum,scorenum) 
+        soundwav4=pygame.mixer.Sound("good.wav") 
+        soundwav4.set_volume(2)
+        soundwav4.play() 
         fourthx=random.randint(50,980)
         myfourth=fourthrect([fourthx,100],speed4) 
         
     if mybomb.rect.colliderect(backimg_surface.rect):
         scorenum-=15
-        loadtext(levelnum,scorenum)  
+        loadtext(levelnum,scorenum)
+        soundwav5=pygame.mixer.Sound("fire.wav") 
+        soundwav5.set_volume(2)
+        soundwav5.play()   
         bombx=random.randint(50,980)
         mybomb=bombrect([bombx,100],speed5)    
           
